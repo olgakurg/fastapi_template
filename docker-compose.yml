@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+
+  some_api:
+    build:
+      context: ./src
+    env_file:
+      - .env
+    volumes:
+      - ./src/:/var/www/api
+    container_name:  some_api
+    expose:
+      - 8000
+
+
+  nginx:
+    image: nginx:1.25
+    container_name: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./config/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./config/nginx/conf.d/:/etc/nginx/conf.d/
+      - ./logs/nginx/:/var/log/nginx
+      - ./data/nginx:/var/www/files
+    depends_on:
+      -  some_api

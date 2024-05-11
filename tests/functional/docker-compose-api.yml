@@ -1,0 +1,14 @@
+version: "3.9"
+
+services:
+
+  test_api:
+    build: ../../src
+    image: test_api
+    env_file:
+      - .env
+    volumes:
+      - ../../src:/var/www/api
+    container_name: test_api
+    expose:
+      - 8000

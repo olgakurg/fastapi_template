@@ -1,0 +1,15 @@
+version: "3.9"
+
+services:
+
+
+  tests:
+    image: test_api
+    environment:
+      - PYTHONPATH="$${PYTHONPATH}:/var/www/api/tests"
+    volumes:
+        - ../../tests:/var/www/api/tests
+    entrypoint: >
+        sh -c "pip install -r tests/functional/requirements.txt 
+        && python3 -m pytest -v tests/unit/test_service.py
+        && python3 -m pytest -v --durations=0 tests/functional/src "
